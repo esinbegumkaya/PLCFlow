@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Structured Text",
+  "scopeName": "source.structured-text",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#constants" },
+    { "include": "#numbers" }
+  ],
+  "repository": {
+    "comments": { "patterns": [{ "name": "comment.block.structured-text", "begin": "\\(\\*", "end": "\\*\\)" }] },
+    "keywords": { "patterns": [{ "name": "keyword.control.structured-text", "match": "\\b(PROGRAM|END_PROGRAM|VAR|END_VAR|AT|IF|THEN|ELSE|END_IF|AND|OR|NOT)\\b" }] },
+    "types": { "patterns": [{ "name": "storage.type.structured-text", "match": "\\b(BOOL|INT|TON)\\b" }] },
+    "constants": { "patterns": [{ "name": "constant.language.structured-text", "match": "\\b(TRUE|FALSE)\\b" }] },
+    "numbers": { "patterns": [{ "name": "constant.numeric.structured-text", "match": "\\b[0-9]+\\b" }] }
+  }
+}

@@ -1,0 +1,13 @@
+services:
+  plcflow:
+    build:
+      context: .
+    command:
+      - examples/conveyor/conveyor-v02.st
+      - --run-wasm
+      - --input
+      - "%I0.0=true"
+      - --cycles
+      - "10"
+      - --cycle-ms
+      - "10"

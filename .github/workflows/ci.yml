@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  dotnet:
+    name: .NET build and tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: dotnet restore
+      - run: dotnet build --no-restore --configuration Release
+      - run: dotnet test --no-build --configuration Release --logger "console;verbosity=normal"
+
+  vscode-extension:
+    name: TypeScript extension
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - working-directory: vscode-extension
+        run: npm install
+      - working-directory: vscode-extension
+        run: npm run compile
+
+  wasm-smoke:
+    name: LLVM / WebAssembly smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install LLVM toolchain
+        run: sudo apt-get update && sudo apt-get install -y clang lld
+      - run: dotnet build --configuration Release
+      - name: Execute conveyor through WebAssembly
+        run: >-
+          dotnet run --project ./src/PLCFlow.Cli --configuration Release --
+          ./examples/conveyor/conveyor-v02.st
+          --run-wasm --input %I0.0=true --cycles 10 --cycle-ms 10
