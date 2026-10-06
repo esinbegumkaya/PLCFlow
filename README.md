@@ -2,7 +2,30 @@
 
 **Structured Text Compiler & Virtual PLC Toolchain**
 
-PLCFlow is a compiler-engineering and industrial-automation tooling project built with C#/.NET, LLVM, WebAssembly and TypeScript. It compiles an IEC 61131-3-inspired Structured Text subset, performs semantic validation, models PLC scan-cycle execution, and provides IDE features through a standalone Language Server and VS Code extension.
+[![CI](https://github.com/esinbegumkaya/PLCFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/esinbegumkaya/PLCFlow/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/esinbegumkaya/PLCFlow)](https://github.com/esinbegumkaya/PLCFlow/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4)](https://dotnet.microsoft.com/)
+
+PLCFlow is an end-to-end compiler and industrial-automation tooling project that takes an **IEC 61131-3-inspired Structured Text program from source code to an executable PLC scan cycle**. Built with **C#/.NET, LLVM, WebAssembly and TypeScript**, it combines a compiler frontend, semantic analysis, a virtual PLC runtime, LLVM/WASM code generation, and IDE tooling through a standalone Language Server and VS Code extension.
+
+```text
+Structured Text → Lexer → Parser → AST → Semantic Analysis
+                                      ├─→ Virtual PLC Runtime → %I / %Q
+                                      └─→ LLVM IR → WebAssembly → Execution
+
+VS Code ↔ TypeScript Extension ↔ C# Language Server ↔ Compiler Frontend
+```
+
+### What PLCFlow demonstrates
+
+- **Compiler engineering:** lexical analysis, recursive-descent parsing, AST construction, symbol resolution, type checking and diagnostics
+- **Industrial automation:** PLC process images, deterministic scan cycles, direct `%I/%Q` addressing and `TON` timer behavior
+- **Backend/toolchain work:** LLVM IR generation and executable WebAssembly through Clang/LLVM
+- **Developer tooling:** Language Server features including diagnostics, hover, go-to-definition and context-aware completion
+- **Engineering quality:** 18 automated tests, GitHub Actions CI, Docker support and reproducible demo scripts
+
+> **v0.5.0 status:** release build verified with 0 warnings / 0 errors, 18/18 tests passing, managed PLC execution, LLVM IR generation and WebAssembly execution.
 
 > PLCFlow is a portfolio/engineering project, not a certified IEC 61131-3 implementation or safety PLC runtime.
 
